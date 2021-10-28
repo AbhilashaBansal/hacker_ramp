@@ -1,0 +1,22 @@
+{
+  "name": "myntrahacker-ramp",
+  "version": "1.0.0",
+  "description": "A virtual shop simulation for Myntra Hacker-ramp 2021",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hacker-ramp",
+    "virtual-shop"
+  ],
+  "author": "Abhilasha Bansal",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "express-sessions": "^1.0.6",
+    "sequelize": "^6.8.0",
+    "sqlite3": "^5.0.2"
+  }
+}
