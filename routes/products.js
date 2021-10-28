@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const sequelize = require('sequelize');
 
 const {Product, db} = require('../db');
 
@@ -7,6 +8,31 @@ const {Product, db} = require('../db');
 // get all products
 router.get('/products', (req, res)=>{
     Product.findAll()
+    .then((data)=>{
+        return res.json(data);
+    })
+    .catch((e)=>{
+        return res.send(e.message);
+    })
+})
+
+
+// get list of brands & categories
+router.get('/all_brands', (req, res)=>{
+    Product.findAll({
+        attributes: [[sequelize.fn('DISTINCT', sequelize.col('brand')), 'brand']]
+    })
+    .then((data)=>{
+        return res.json(data);
+    })
+    .catch((e)=>{
+        return res.send(e.message);
+    })
+})
+router.get('/all_cats', (req, res)=>{
+    Product.findAll({
+        attributes: [[sequelize.fn('DISTINCT', sequelize.col('category')), 'category']]
+    })
     .then((data)=>{
         return res.json(data);
     })
