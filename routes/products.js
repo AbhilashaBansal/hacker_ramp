@@ -3,6 +3,7 @@ const router = express.Router();
 const sequelize = require('sequelize');
 
 const {Product, db} = require('../db');
+const {Op} = require('sequelize');
 
 
 // get all products
