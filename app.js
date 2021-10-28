@@ -3,6 +3,7 @@ const app = express();
 
 // database
 const {db, Product} = require('./db');
+const productRoutes = require('./routes/products');
 
 
 const session = require('express-session');
@@ -21,6 +22,8 @@ app.use("/", express.static(__dirname + '/public'));
 // app.set('view engine', 'ejs');
 
 
+// Routes
+app.use('/api', productRoutes);
 
 
 //syncing db

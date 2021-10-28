@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Products</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+    <!-- jQuery  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+
+    <nav>
+        ADD A PRODUCT TO DB
+    </nav>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+                <form>
+                    <div class="mb-3">
+                      <label for="name" class="form-label">Name</label>
+                      <input type="text" class="form-control" id="name" aria-describedby="product-name" style="max-width: 600px;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="brand" class="form-label">Brand</label>
+                        <input type="text" class="form-control" id="brand" aria-describedby="product-brand">
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <input type="text" class="form-control" id="category" aria-describedby="product-category">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="description" aria-describedby="product-description">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="picture1" class="form-label">Picture 1</label>
+                        <input type="url" class="form-control" id="picture1" aria-describedby="product-pic1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="picture2" class="form-label">Picture 2</label>
+                        <input type="url" class="form-control" id="picture2" aria-describedby="product-pic2">
+                    </div>
+                    <div class="mb-3">
+                        <label for="picture3" class="form-label">Picture 3</label>
+                        <input type="url" class="form-control" id="picture3" aria-describedby="product-pic3">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" aria-describedby="product-price">
+                    </div>
+                    <div class="mb-3">
+                        <label for="discount" class="form-label">Discount</label>
+                        <input type="number" class="form-control" id="discount" aria-describedby="product-discount" placeholder="Enter percentage of discount">
+                    </div>
+                   
+                    <button id="add-btn" type="button" class="btn btn-primary">ADD</button>
+                  </form>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $("#add-btn").click(()=>{
+        let name = $("#name").val();
+        let brand = $("#brand").val();
+        let category = $("#category").val();
+        let description = $("#description").val();
+        let picture1 = $("#picture1").val();
+        let picture2 = $("#picture2").val();
+        let picture3 = $("#picture3").val();
+        let price = $("#price").val();
+        let discount = $("#discount").val();
+        $.post('/api/product/add', {name, brand, category, description, picture1, picture2, picture3, price, discount}, (data, status)=>{
+            if(data.val=="success"){
+                alert("Item added succesfully!");
+            }
+            else{
+                alert('Some error occured. Please try again.');
+            }
+        } );
+    })
+</script>
+</html>
