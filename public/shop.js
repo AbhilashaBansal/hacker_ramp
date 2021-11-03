@@ -1,6 +1,8 @@
 all_brands_list = []
 all_cats_list = []
 
+$($(".cont_2")[0]).hide();
+
 async function get_brands_categories(){
     await $.get('/api/all_brands', (data)=>{
         for(let i=0; i<data.length; i++){
@@ -68,19 +70,40 @@ $("#create-btn").click((e)=>{
 
     $.post('/api/vs/products', {brands, categories}, (data, status)=>{
         console.log(data);
-        if(status=="success"){
-            alert("Sucess!");
+        
+         // canvas operations
+        // let c = document.getElementById("outer-shop");
+        // let ctx = c.getContext("2d");
+        // let img = document.getElementById("scream");
+        // ctx.drawImage(img);
+        
+        let no_of_pieces = Math.min(data.length, 8);
+        for(let i=0; i<no_of_pieces; i++){
+            // plain javascript here
+            let img = document.createElement('img');
+            img.src = data[i]['picture1'];
+            img.width=120;
+            img.height=120;
+            document.getElementById('id111').appendChild(img);
         }
+       
+        // for(let i=1; i<=no_of_pieces; i++){
+        //     let img = new Image();   
+            
+        //     img.addEventListener('load', function() {
+        //         // execute drawImage statements here
+        //         ctx.drawImage(img, xinit, yinit, 30, 30);
+        //         xinit += inc;
+        //         if(inc==20) inc=40;
+        //         else inc=20;
+        //     }, false);
+
+        //     img.src = data[i-1]['picture1'];
+        //     console.log(img.src);
+        // }
     })
 
     $($(".cont_1")[0]).hide();
     $($(".cont_2")[0]).show();
 
-    // canvas operations
-    let c = document.getElementById("outer-shop");
-    let ctx = c.getContext("2d");
-    // let img = document.getElementById("scream");
-    // ctx.drawImage(img);
-    let url = '/public/backgounds/bg2.png';
-    ctx.fillStyle = `url(${url})`;
 })
