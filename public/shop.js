@@ -45,6 +45,7 @@ async function create_checkboxes(){
 
 create_checkboxes();
 
+
 $("#create-btn").click((e)=>{
     brands = [];
     categories = [];
@@ -71,4 +72,15 @@ $("#create-btn").click((e)=>{
             alert("Sucess!");
         }
     })
+
+    $($(".cont_1")[0]).hide();
+    $($(".cont_2")[0]).show();
+
+    // canvas operations
+    let c = document.getElementById("outer-shop");
+    let ctx = c.getContext("2d");
+    // let img = document.getElementById("scream");
+    // ctx.drawImage(img);
+    let url = '/public/backgounds/bg2.png';
+    ctx.fillStyle = `url(${url})`;
 })

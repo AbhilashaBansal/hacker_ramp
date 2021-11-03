@@ -1,0 +1,14 @@
+.navbar:after {
+    width: 0%;
+}
+
+.cont_2 {
+    background: url('./backgounds/bg2.png');
+    background-repeat: no-repeat;
+    background-repeat: round;
+}
+
+#outer-shop {
+    width: 98vw;
+    /* height: 100vh; */
+}
