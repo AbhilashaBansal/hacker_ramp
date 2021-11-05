@@ -14,5 +14,41 @@
 }
 
 .product-img:hover {
-    transform: rotate(20deg);
+    /* transform: rotate(20deg); */
+    animation-name: ani1;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
 }
+
+@keyframes ani1 {
+    /* 0%   {
+        transform: rotate(0deg);
+    } */
+    25%  {
+        transform: rotate(-10deg);
+    }
+    /* 50%  {
+        transform: rotate(0deg);
+    } */
+    75% {
+        transform: rotate(10deg);
+    }
+    /* 100%  {
+        transform: rotate(0deg);
+    } */
+}
+
+.prod-brand {
+    display: inline-block;
+}
+.prod-name {
+    display: inline-block;
+}
+.modal-content{
+    padding: 1%;
+    width: max-content;
+}
+
+/* discount coupons */
+/* adds/ recommended pieces */
+/* fashion icon & label house facts/ fashion trends */

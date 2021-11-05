@@ -82,6 +82,8 @@ $("#create-btn").click((e)=>{
             // plain javascript here
             let img = document.createElement('img');
             img.classList.add("product-img");
+            img.dataset.prod_id = data[i]['id'];
+            img.dataset.index = i;
             img.src = data[i]['picture1'];
             img.width=120;
             img.height=120;
@@ -89,6 +91,27 @@ $("#create-btn").click((e)=>{
                 img.height = 140;
             }
             document.getElementById('id111').appendChild(img);
+
+            img.addEventListener('click', (e)=>{
+                let idx = e.target.dataset.index;
+                let imgsrc = data[idx]['picture1'];
+                let brand = data[idx]['brand'];
+                let name = data[idx]['name'];
+                let desc = data[idx]['description'];
+                let price = data[idx]['price'];
+                let discount = data[idx]['discount'];
+
+                $($(".prod-img")[0]).attr('src', imgsrc);
+                $($(".prod-brand")[0]).html(brand);
+                $($(".prod-name")[0]).html(name);
+                $($(".prod-desc")[0]).html(desc);
+                $($(".prod-price")[0]).html("Price: " + price);
+                $($(".prod-disc")[0]).html("Discount: " + discount);
+
+                let modal = new bootstrap.Modal(document.getElementById('productModal'), {})
+                modal.show();
+                // console.log("Modal to be launched . . .");
+            })
         }
        
         // for(let i=1; i<=no_of_pieces; i++){
