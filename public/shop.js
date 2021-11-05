@@ -81,9 +81,13 @@ $("#create-btn").click((e)=>{
         for(let i=0; i<no_of_pieces; i++){
             // plain javascript here
             let img = document.createElement('img');
+            img.classList.add("product-img");
             img.src = data[i]['picture1'];
             img.width=120;
             img.height=120;
+            if(data[i]['category']=='Dresses' || data[i]['category']=='Jeans'){
+                img.height = 140;
+            }
             document.getElementById('id111').appendChild(img);
         }
        

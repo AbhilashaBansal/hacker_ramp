@@ -12,3 +12,7 @@
     width: 98vw;
     height: 100vh;
 }
+
+.product-img:hover {
+    transform: rotate(20deg);
+}
