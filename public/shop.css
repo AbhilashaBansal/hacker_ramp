@@ -57,12 +57,6 @@
 /* adds/ recommended pieces */
 /* fashion icon & label house facts/ fashion trends */
 
-@keyframes ani2 {
-    100% {
-        transform: translateX(250px);
-    }
-}
-
 .main-cont {
     padding-top: 1%;
 }
@@ -71,4 +65,22 @@
     height: 270px;
     position: absolute;
     /* left: 0; */
+}
+
+.prods-extended {
+    position: fixed;
+    top: 300px;
+    left: 20px;
+    overflow: scroll;
+    background-color: rgb(86, 125, 157);
+}
+#id333 {
+    overflow: scroll;
+    max-height: 200px;
+}
+
+.dyn-btn{
+    position: absolute;
+    top: 40vh;
+    right: 30vw;
 }

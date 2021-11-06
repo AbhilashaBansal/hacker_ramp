@@ -74,8 +74,9 @@ $("#create-btn").click((e)=>{
     $.post('/api/vs/products', {brands, categories}, (data, status)=>{
         // console.log(data);
         
-        let no_of_pieces = Math.min(data.length, 8);
-        for(let i=0; i<no_of_pieces; i++){
+        let no_of_pieces = Math.min(data.length, 7);
+        let i=0;
+        for(i=0; i<no_of_pieces; i++){
             // plain javascript here
             // dynamically appending images
             let img = document.createElement('img');
@@ -90,6 +91,41 @@ $("#create-btn").click((e)=>{
             }
             document.getElementById('id111').appendChild(img);
 
+            // product modal
+            img.addEventListener('click', (e)=>{
+                let idx = e.target.dataset.index;
+                let imgsrc = data[idx]['picture1'];
+                let brand = data[idx]['brand'];
+                let name = data[idx]['name'];
+                let desc = data[idx]['description'];
+                let price = data[idx]['price'];
+                let discount = data[idx]['discount'];
+
+                $($(".prod-img")[0]).attr('src', imgsrc);
+                $($(".prod-brand")[0]).html(brand);
+                $($(".prod-name")[0]).html(name);
+                $($(".prod-desc")[0]).html(desc);
+                $($(".prod-price")[0]).html("Price: " + price);
+                $($(".prod-disc")[0]).html("Discount: " + discount);
+
+                let modal = new bootstrap.Modal(document.getElementById('productModal'), {})
+                modal.show();
+                // console.log("Modal to be launched . . .");
+            })
+        }
+
+        for(; i<data.length; i++){
+            let img = document.createElement('img');
+            img.classList.add("product-img");
+            img.dataset.prod_id = data[i]['id'];
+            img.dataset.index = i;
+            img.src = data[i]['picture1'];
+            img.width=180;
+            img.height=180;
+            if(data[i]['category']=='Dresses' || data[i]['category']=='Jeans'){
+                img.height = 200;
+            }
+            document.getElementById('id333').appendChild(img);
             // product modal
             img.addEventListener('click', (e)=>{
                 let idx = e.target.dataset.index;
@@ -202,3 +238,8 @@ function movement() {
 setInterval(() => {
     movement();
 }, 100);
+
+$("#id333").hide();
+$(".dyn-btn").click(()=>{
+    $("#id333").toggle();
+})
