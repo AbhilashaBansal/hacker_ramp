@@ -1,3 +1,7 @@
+/* body {
+    position: relative;
+} */
+
 .navbar:after {
     width: 0%;
 }
@@ -17,7 +21,7 @@
     /* transform: rotate(20deg); */
     animation-name: ani1;
     animation-duration: 1s;
-    animation-iteration-count: infinite;
+    /* animation-iteration-count: infinite; */
 }
 
 @keyframes ani1 {
@@ -52,3 +56,19 @@
 /* discount coupons */
 /* adds/ recommended pieces */
 /* fashion icon & label house facts/ fashion trends */
+
+@keyframes ani2 {
+    100% {
+        transform: translateX(250px);
+    }
+}
+
+.main-cont {
+    padding-top: 1%;
+}
+
+#cust_avatar{
+    height: 270px;
+    position: absolute;
+    /* left: 0; */
+}

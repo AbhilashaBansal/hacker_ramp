@@ -2,6 +2,8 @@ all_brands_list = []
 all_cats_list = []
 
 $($(".cont_2")[0]).hide();
+let move_forward = false;
+let move_back = false;
 
 async function get_brands_categories(){
     await $.get('/api/all_brands', (data)=>{
@@ -66,20 +68,16 @@ $("#create-btn").click((e)=>{
             categories.push($(cat[i]).data().cat);
         }
     }
-    console.log(brands, categories);
+    // console.log(brands, categories);
+
 
     $.post('/api/vs/products', {brands, categories}, (data, status)=>{
-        console.log(data);
-        
-         // canvas operations
-        // let c = document.getElementById("outer-shop");
-        // let ctx = c.getContext("2d");
-        // let img = document.getElementById("scream");
-        // ctx.drawImage(img);
+        // console.log(data);
         
         let no_of_pieces = Math.min(data.length, 8);
         for(let i=0; i<no_of_pieces; i++){
             // plain javascript here
+            // dynamically appending images
             let img = document.createElement('img');
             img.classList.add("product-img");
             img.dataset.prod_id = data[i]['id'];
@@ -92,6 +90,7 @@ $("#create-btn").click((e)=>{
             }
             document.getElementById('id111').appendChild(img);
 
+            // product modal
             img.addEventListener('click', (e)=>{
                 let idx = e.target.dataset.index;
                 let imgsrc = data[idx]['picture1'];
@@ -113,24 +112,93 @@ $("#create-btn").click((e)=>{
                 // console.log("Modal to be launched . . .");
             })
         }
-       
-        // for(let i=1; i<=no_of_pieces; i++){
-        //     let img = new Image();   
-            
-        //     img.addEventListener('load', function() {
-        //         // execute drawImage statements here
-        //         ctx.drawImage(img, xinit, yinit, 30, 30);
-        //         xinit += inc;
-        //         if(inc==20) inc=40;
-        //         else inc=20;
-        //     }, false);
-
-        //     img.src = data[i-1]['picture1'];
-        //     console.log(img.src);
-        // }
+        
     })
 
     $($(".cont_1")[0]).hide();
     $($(".cont_2")[0]).show();
 
+    // canvas operations
+    // let c = document.getElementById("outer-shop");
+    // let ctx = c.getContext("2d");
+    // let img = document.getElementById("scream");
+    // ctx.drawImage(img);
+
+    // // canvas operations
+    // let c = document.getElementById("canvas1");
+    // let ctx = c.getContext("2d");
+    // ctx.imageSmoothingEnabled = false;
+    // let img = new Image();
+    // img.src = './backgounds/char1_.png';
+    // img.addEventListener('load', function() {
+    //     ctx.drawImage(img, 60, 60, 30, 50);
+    // }, false);  
+    
+    $('body').keydown((e)=>{
+        // console.log("Investigating");
+        if(e.keyCode==39){
+            // right arrow key
+            move_forward = true;
+            move_back = false;
+            console.log("Right arrow key pressed...");
+        }
+        else if(e.keyCode==37){
+            // left arrow key
+            move_back = true;
+            move_forward = false;
+            console.log("Left arrow key pressed...");
+        }
+    })
+    $('body').keyup((e)=>{
+        if(e.keyCode==39){
+            // right arrow key
+            move_forward = false;
+        }
+        else if(e.keyCode==37){
+            // left arrow key
+            move_back = false;
+        }
+    })
+
+    movement();
 })
+
+let rpics = ['./backgounds/char3.png','./backgounds/char3.png','./backgounds/char4.png','./backgounds/char4.png','./backgounds/char5.png','./backgounds/char5.png',
+'./backgounds/char3.png','./backgounds/char3.png','./backgounds/char2.png','./backgounds/char2.png'];
+let lpics = ['./backgounds/char6.png','./backgounds/char6.png','./backgounds/char7.png','./backgounds/char7.png',
+'./backgounds/char8.png','./backgounds/char8.png','./backgounds/char9.png','./backgounds/char9.png'];
+
+let rmi=0;
+let lmi=0;
+function movement() {
+    //character movement (very primitive)
+    if(move_forward==true){
+        let pos = $("#cust_avatar").position();
+        let str = (pos['left']+10);
+        if(str<=(window.innerWidth*(5/8))){
+            str = String(str)+"px";
+            $("#cust_avatar").css({'left': str});
+            console.log("Moving right...");
+
+            rmi = (rmi+1)%rpics.length;
+            $("#cust_avatar").attr('src', rpics[rmi]);
+        }
+    }
+    if(move_back==true){
+        let pos = $("#cust_avatar").position();
+        let str = (pos['left']-10);
+        if(str>=0){
+            str = String(str)+"px";
+            $("#cust_avatar").css({'left': str});
+
+            lmi = (lmi+1)%lpics.length;
+            $("#cust_avatar").attr('src', lpics[lmi]);
+        }   
+    }
+    
+    // requestAnimationFrame(movement);
+}
+
+setInterval(() => {
+    movement();
+}, 100);
