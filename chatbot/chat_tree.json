@@ -1,0 +1,45 @@
+{
+  "child_msg" : ["Want to know a current fashion trend?", "What about some facts about top fashion labels & brands?","Wanna get a recommendation?","Wanna know how the shop works?","Get back to shopping?"],
+  "children" : [
+    {
+      "child_msg" : ["Trend about jeans", "Trend about sleeves", "Generic trend", "Back to shopping"],
+      "children" : [
+        {
+          "message" : "Flayered/ Wide legged jeans are in vogue for a while!",
+          "type" : "function"
+        },
+        {
+          "message" : "Puffed sleeves are trending these days.",
+          "type" : "normal"
+        },
+        {
+          "message" : "Shackets (shirt-jackets) are becoming quite popular, especially ones with a wide checked pattern.",
+          "type" : "normal"
+        }
+      ]
+    },
+    {
+      "child_msg" : ["Fact about a fashion brand", "Fact about a label", "Fact about a fashion app", "Back to shopping"],
+      "children" : [
+        {
+          "message" : "Levis is one of the world’s largest brand-name apparel companies and a global leader in jeanswear. They design and market jeans, casual wear and related accessories for men, women and children under the Levi’s®, Dockers®, Signature by Levi Strauss & Co.™ and Denizen® brands.",
+          "type" : "function"
+        },
+        {
+          "message" : "Versace’s logo is the head of Medusa. Medusa was the Greek mythological figure known for having hair made of snakes and eyes that could turn men to stone.",
+          "type" : "normal"
+        },
+        {
+          "message" : "In 2007, Myntra started as a platform to sell Personalized gift items. In series B of funding, Myntra raised $14 Million led by Tiger Global.",
+          "type" : "normal"
+        }
+      ]
+    },
+    {
+      "message" : "That piece at the end of the line on the top display would look great on you."
+    },
+    {
+      "message" : "We have created a virtual shop with the brands and categories you selected. Explore the products on the top display, and click on explore more to view more products. Click on a product to view more details about it."
+    }
+  ]
+}
