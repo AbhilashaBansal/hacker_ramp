@@ -5,6 +5,9 @@ $($(".cont_2")[0]).hide();
 let move_forward = false;
 let move_back = false;
 
+let tick=0;
+
+// FILTERING LOGIC
 async function get_brands_categories(){
     await $.get('/api/all_brands', (data)=>{
         for(let i=0; i<data.length; i++){
@@ -50,9 +53,48 @@ async function create_checkboxes(){
 create_checkboxes();
 
 
-$("#create-btn").click((e)=>{
+// fn to dynamically append product images
+function dynamicImages(obj, ele_id, i, cls){
+    let img = document.createElement('img');
+    img.classList.add(cls);
+    img.dataset.prod_id = obj['id'];
+    img.dataset.index = i;
+    img.src = obj['picture1'];
+    img.width=120;
+    img.height=120;
+    if(obj['category']=='Dresses' || obj['category']=='Jeans'){
+        img.height = 140;
+    }
+    document.getElementById(ele_id).appendChild(img);
+
+    img.addEventListener('click', (e)=>{
+        let idx = e.target.dataset.index;
+        let imgsrc = obj['picture1'];
+        let brand = obj['brand'];
+        let name = obj['name'];
+        let desc = obj['description'];
+        let price = obj['price'];
+        let discount = obj['discount'];
+
+        $($(".prod-img")[0]).attr('src', imgsrc);
+        $($(".prod-brand")[0]).html(brand);
+        $($(".prod-name")[0]).html(name);
+        $($(".prod-desc")[0]).html(desc);
+        $($(".prod-price")[0]).html("Price: " + price);
+        $($(".prod-disc")[0]).html("Discount: " + discount);
+
+        let modal = new bootstrap.Modal(document.getElementById('productModal'), {})
+        modal.show();
+        // console.log("Modal to be launched . . .");
+    })
+}
+
+
+// SHOP CREATION
+$("#create-btn").click(function(e){
     brands = [];
     categories = [];
+    tick++;
 
     br = $(".br");
     cat = $(".cat");
@@ -79,99 +121,27 @@ $("#create-btn").click((e)=>{
         for(i=0; i<no_of_pieces; i++){
             // plain javascript here
             // dynamically appending images
-            let img = document.createElement('img');
-            img.classList.add("product-img");
-            img.dataset.prod_id = data[i]['id'];
-            img.dataset.index = i;
-            img.src = data[i]['picture1'];
-            img.width=120;
-            img.height=120;
-            if(data[i]['category']=='Dresses' || data[i]['category']=='Jeans'){
-                img.height = 140;
-            }
-            document.getElementById('id111').appendChild(img);
-
-            // product modal
-            img.addEventListener('click', (e)=>{
-                let idx = e.target.dataset.index;
-                let imgsrc = data[idx]['picture1'];
-                let brand = data[idx]['brand'];
-                let name = data[idx]['name'];
-                let desc = data[idx]['description'];
-                let price = data[idx]['price'];
-                let discount = data[idx]['discount'];
-
-                $($(".prod-img")[0]).attr('src', imgsrc);
-                $($(".prod-brand")[0]).html(brand);
-                $($(".prod-name")[0]).html(name);
-                $($(".prod-desc")[0]).html(desc);
-                $($(".prod-price")[0]).html("Price: " + price);
-                $($(".prod-disc")[0]).html("Discount: " + discount);
-
-                let modal = new bootstrap.Modal(document.getElementById('productModal'), {})
-                modal.show();
-                // console.log("Modal to be launched . . .");
-            })
+            dynamicImages(data[i], 'id111', i, "product-img");
         }
 
         for(; i<data.length; i++){
-            let img = document.createElement('img');
-            img.classList.add("product-img");
-            img.dataset.prod_id = data[i]['id'];
-            img.dataset.index = i;
-            img.src = data[i]['picture1'];
-            img.width=180;
-            img.height=180;
-            if(data[i]['category']=='Dresses' || data[i]['category']=='Jeans'){
-                img.height = 200;
-            }
-            document.getElementById('id333').appendChild(img);
-            // product modal
-            img.addEventListener('click', (e)=>{
-                let idx = e.target.dataset.index;
-                let imgsrc = data[idx]['picture1'];
-                let brand = data[idx]['brand'];
-                let name = data[idx]['name'];
-                let desc = data[idx]['description'];
-                let price = data[idx]['price'];
-                let discount = data[idx]['discount'];
-
-                $($(".prod-img")[0]).attr('src', imgsrc);
-                $($(".prod-brand")[0]).html(brand);
-                $($(".prod-name")[0]).html(name);
-                $($(".prod-desc")[0]).html(desc);
-                $($(".prod-price")[0]).html("Price: " + price);
-                $($(".prod-disc")[0]).html("Discount: " + discount);
-
-                let modal = new bootstrap.Modal(document.getElementById('productModal'), {})
-                modal.show();
-                // console.log("Modal to be launched . . .");
-            })
+            dynamicImages(data[i], 'id333', i, "product-img2");
         }
         
+        $.get('/api/recommended', (pro)=>{
+            dynamicImages(pro, 'id111', i, "product-img");
+            data.push(pro);
+        })
     })
 
     $($(".cont_1")[0]).hide();
     $($(".cont_2")[0]).show();
-
-    // canvas operations
-    // let c = document.getElementById("outer-shop");
-    // let ctx = c.getContext("2d");
-    // let img = document.getElementById("scream");
-    // ctx.drawImage(img);
-
-    // // canvas operations
-    // let c = document.getElementById("canvas1");
-    // let ctx = c.getContext("2d");
-    // ctx.imageSmoothingEnabled = false;
-    // let img = new Image();
-    // img.src = './backgounds/char1_.png';
-    // img.addEventListener('load', function() {
-    //     ctx.drawImage(img, 60, 60, 30, 50);
-    // }, false);  
+ 
     
+    // event listeners for char movement
     $('body').keydown((e)=>{
         // console.log("Investigating");
+        tick++;
         if(e.keyCode==39){
             // right arrow key
             move_forward = true;
@@ -186,6 +156,7 @@ $("#create-btn").click((e)=>{
         }
     })
     $('body').keyup((e)=>{
+        tick++;
         if(e.keyCode==39){
             // right arrow key
             move_forward = false;
@@ -199,6 +170,9 @@ $("#create-btn").click((e)=>{
     movement();
 })
 
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// CHARACTER MOVEMENT (very primitive)
 let rpics = ['./backgounds/char3.png','./backgounds/char3.png','./backgounds/char4.png','./backgounds/char4.png','./backgounds/char5.png','./backgounds/char5.png',
 './backgounds/char3.png','./backgounds/char3.png','./backgounds/char2.png','./backgounds/char2.png'];
 let lpics = ['./backgounds/char6.png','./backgounds/char6.png','./backgounds/char7.png','./backgounds/char7.png',
@@ -212,12 +186,16 @@ function movement() {
         let pos = $("#cust_avatar").position();
         let str = (pos['left']+10);
         if(str<=(window.innerWidth*(5/8))){
+            if(str>=(window.innerWidth*(4/8))){
+                $(".dyn-btn").show();
+            }
             str = String(str)+"px";
             $("#cust_avatar").css({'left': str});
             console.log("Moving right...");
 
             rmi = (rmi+1)%rpics.length;
             $("#cust_avatar").attr('src', rpics[rmi]);
+            tick++;
         }
     }
     if(move_back==true){
@@ -230,6 +208,7 @@ function movement() {
             lmi = (lmi+1)%lpics.length;
             $("#cust_avatar").attr('src', lpics[lmi]);
         }   
+        tick++;
     }
     
     // requestAnimationFrame(movement);
@@ -237,9 +216,69 @@ function movement() {
 
 setInterval(() => {
     movement();
+    // tick++;
+    if(tick>=200){
+        $(".dyn-btn2").show();
+    }
 }, 100);
 
 $("#id333").hide();
 $(".dyn-btn").click(()=>{
     $("#id333").toggle();
 })
+
+
+// COUPON CONFETTI
+function randomize(collection) {
+    let randomNumber = Math.floor(Math.random() * collection.length);
+    return collection[randomNumber];
+}
+  
+function confetti() {
+    $(".confetti").remove();
+    let $confettiItems = $('<div class="confetti"></div>'),
+        colors = ["#3b5692", "#f9c70b", "#00abed", "#ea6747"],
+        height = 6.6,
+        width = 6.6;
+  
+    let scale, $confettiItem;
+  
+    for (let i = 0; i < 100; i++) {
+        scale = Math.random() * 1.75 + 1;
+        $confettiItem = $(
+            "<svg class='confetti-item' width='" +
+            width * scale +
+            "' height='" +
+            height * scale +
+            "' viewbox='0 0 " +
+            width +
+            " " +
+            height +
+            "'>\n  <use transform='rotate(" +
+            Math.random() * 360 +
+            ", " +
+            width / 2 +
+            ", " +
+            height / 2 +
+            ")' xlink:href='#svg-confetti' />\n</svg>"
+        );
+        $confettiItem.css({
+            animation:
+            Math.random() +
+            2 +
+            "s " +
+            Math.random() * 2 +
+            "s confetti-fall ease-in both",
+            color: randomize(colors),
+            left: Math.random() * 100 + "vw"
+        });
+        $confettiItems.append($confettiItem);
+    }
+    $("body").append($confettiItems);
+}
+  
+$("#couponModal").on("shown.bs.modal", function() {
+    confetti();
+    console.log("Hurray");
+});
+  

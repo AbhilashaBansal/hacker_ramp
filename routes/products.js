@@ -17,6 +17,18 @@ router.get('/products', (req, res)=>{
     })
 })
 
+// get a recommended product
+router.get('/recommended', (req, res)=>{
+    Product.findAll()
+    .then((data)=>{
+        let idx = Math.floor(Math.random() * data.length);
+        return res.json(data[idx]);
+    })
+    .catch((e)=>{
+        return res.send(e.message);
+    })
+})
+
 
 // get list of brands & categories
 router.get('/all_brands', (req, res)=>{

@@ -23,6 +23,9 @@
     animation-duration: 1s;
     /* animation-iteration-count: infinite; */
 }
+.product-img2 {
+    margin: 1%;
+}
 
 @keyframes ani1 {
     /* 0%   {
@@ -53,34 +56,89 @@
     width: max-content;
 }
 
-/* discount coupons */
-/* adds/ recommended pieces */
+/* discount coupons (done) */ 
+/* adds/ recommended pieces (done) */
 /* fashion icon & label house facts/ fashion trends */
 
 .main-cont {
     padding-top: 1%;
 }
 
+#id222 {
+    padding-top: 2%;
+}
+
 #cust_avatar{
     height: 270px;
     position: absolute;
     /* left: 0; */
+    z-index: 10;
 }
 
 .prods-extended {
     position: fixed;
     top: 300px;
-    left: 20px;
+    left: 0;
     overflow: scroll;
     background-color: rgb(86, 125, 157);
+    width: inherit;
+    z-index: 20;
 }
 #id333 {
     overflow: scroll;
     max-height: 200px;
+    width: max-content;
 }
 
 .dyn-btn{
     position: absolute;
-    top: 40vh;
+    top: 45vh;
     right: 30vw;
+    display: none;
+    z-index: 0;
+}
+
+.dyn-btn2{
+    position: absolute;
+    top: 44vh;
+    left: 30vw;
+    display: none;
+    z-index: 0;
+}
+
+.modal-body {
+    max-width: 400px;
+}
+
+/* Confetti for coupon */
+.confetti {
+    left: 0;
+    pointer-events: none ;
+    position: fixed;
+    top: 0;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    height: 100%;
+    width: 100%;
+    z-index: 10000;
+}
+
+.confetti-item {
+    position: absolute;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    z-index: 10000;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100%)
+    }
+    95%{
+        animation-timing-function: ease-in-out;
+        transform: translateY(calc(100vh - 55%))
+    }
+    100% {
+        transform: translateY(calc(150vh - 65%))
+    }
 }
