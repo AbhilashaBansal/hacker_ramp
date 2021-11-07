@@ -217,7 +217,7 @@ function movement() {
 setInterval(() => {
     movement();
     // tick++;
-    if(tick>=200){
+    if(tick>=300){
         $(".dyn-btn2").show();
     }
 }, 100);
