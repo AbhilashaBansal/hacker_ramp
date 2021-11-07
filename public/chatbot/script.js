@@ -128,7 +128,7 @@ class ChatTree {
         if("message" in this.chat_tree){
             let data = this.chat_tree['message'];
             resp += data;
-            resp += "<br><br>Please input 1/ 2/ 3/ 4 again as per your wish, to talk more...";
+            resp += "<br><br>Please input 1/ 2/ 3/ 4/ 5 again as per your wish, to talk more...";
             // return this.init();
             const data2 = await this.reset();
             this.chat_tree = data2;
